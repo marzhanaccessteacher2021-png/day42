@@ -1,0 +1,16 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type MovieModel {
+  description: String
+  genre: String!
+  id: ID!
+  title: String!
+  year: Int!
+}
+
+type Query {
+  movie(id: ID!): MovieModel!
+  movies: [MovieModel!]!
+}

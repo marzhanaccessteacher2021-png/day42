@@ -1,0 +1,63 @@
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Genre{
+  ACTION
+  COMEDY
+  DRAMA
+  HORROR
+  SCI_FI
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  password  String
+  role      Role     @default(USER)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  reviews   Review[]
+} 
+
+model Movie {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  year        Int
+  genre       Genre
+  createdAt   DateTime @default(now())
+
+  reviews Review[]
+
+  @@index([title])
+  @@index([year])
+  @@index([title, year])
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  rating    Int
+  comment   String?
+  movieId   String
+  userId    String
+  createdAt DateTime @default(now())
+  
+  movie Movie @relation(fields: [movieId], references: [id])
+  user  User  @relation(fields: [userId], references: [id])
+}

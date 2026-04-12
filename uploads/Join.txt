@@ -1,0 +1,93 @@
+-- =========================
+-- 1. TABLES
+-- =========================
+
+
+CREATE TABLE customers (
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    city TEXT,
+    created_at DATE
+);
+
+CREATE TABLE orders (
+    id SERIAL PRIMARY KEY,
+    customer_id INT,
+    order_date DATE,
+    status TEXT,
+    total_amount NUMERIC(10,2)
+);
+
+CREATE TABLE products (
+    id SERIAL PRIMARY KEY,
+    title TEXT,
+    category TEXT,
+    price NUMERIC(10,2)
+);
+
+CREATE TABLE order_items (
+    id SERIAL PRIMARY KEY,
+    order_id INT,
+    product_id INT,
+    quantity INT,
+    price_at_order NUMERIC(10,2)
+);
+
+-- =========================
+-- 2. DATA
+-- =========================
+
+-- ---------- customers (10)
+INSERT INTO customers (name, city, created_at) VALUES
+('Alice', 'Almaty', '2023-11-01'),
+('Bob', 'Astana', '2023-11-10'),
+('Charlie', 'Shymkent', '2023-12-01'),
+('Diana', 'Almaty', '2023-12-15'),
+('Eve', 'Karaganda', '2024-01-05'),
+('Frank', 'Astana', '2024-01-10'),
+('Grace', 'Almaty', '2024-01-15'),
+('Hank', 'Pavlodar', '2024-02-01'),
+('Ivy', 'Taraz', '2024-02-05'),
+('Jack', 'Semey', '2024-02-10');
+
+-- Charlie, Eve, Hank, Ivy, Jack — без заказов
+
+-- ---------- orders (10)
+INSERT INTO orders (customer_id, order_date, status, total_amount) VALUES
+(1, '2024-01-10', 'completed', 1500.00),
+(1, '2024-01-15', 'completed', 800.00),
+(2, '2024-01-12', 'processing', 200.00),
+(4, '2024-01-20', 'completed', 1200.00),
+(6, '2024-01-22', 'completed', 300.00),
+(7, '2024-01-25', 'cancelled', 400.00),
+(2, '2024-02-05', 'completed', 700.00),
+(1, '2024-02-10', 'processing', 250.00);
+
+-- ---------- products (10)
+INSERT INTO products (title, category, price) VALUES
+('Laptop', 'Electronics', 1200.00),
+('Mouse', 'Accessories', 50.00),
+('Keyboard', 'Accessories', 100.00),
+('Monitor', 'Electronics', 400.00),
+('USB Cable', 'Cables', 10.00),
+('Webcam', 'Electronics', 150.00),
+('Headphones', 'Accessories', 200.00),
+('Microphone', 'Electronics', 300.00),
+('Chair', 'Furniture', 500.00),
+('Desk Lamp', 'Furniture', 80.00);
+
+-- ---------- order_items (10)
+INSERT INTO order_items (order_id, product_id, quantity, price_at_order) VALUES
+(1, 1, 1, 1200.00),
+(1, 2, 2, 50.00),
+(2, 3, 1, 100.00),
+(3, 2, 1, 50.00),
+(4, 4, 1, 400.00),
+(5, 5, 3, 10.00),
+(6, 7, 1, 200.00),
+(7, 8, 1, 300.00);
+
+INSERT INTO orders (customer_id, order_date, status, total_amount) VALUES
+(999, '2024-02-15', 'completed', 600.00),
+(998, '2024-02-16', 'processing', 350.00);
+
